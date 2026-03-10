@@ -25,8 +25,8 @@ except Exception as e:
 
 # --- 3. HEADER & BRANDING ---
 st.title("🛍️ Advanced Micro-Intent Predictor")
-st.markdown("### *Master of Science in Advanced Software Engineering*")
-st.markdown("**University of Westminster, UK | Research Prototype**")
+# st.markdown("### *Master of Science in Advanced Software Engineering*")
+# st.markdown("**University of Westminster, UK | Research Prototype**")
 st.divider()
 
 # --- 4. DASHBOARD LAYOUT ---
