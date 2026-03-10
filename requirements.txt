@@ -1,6 +1,3 @@
-Important tips for saving this file on a Mac:
-Use Plain Text: In TextEdit, you must go to the top menu and click Format > Make Plain Text (or press Shift + Command + T). If you don't do this, Mac saves it as an .rtf file, which will break the deployment.
-
-The Name: Make sure it is named exactly requirements.txt (all lowercase).
-
-The Location: Save it in the same MSc_Project_Code folder where your app.py and xgb_baseline.json are.
+streamlit
+pandas
+xgboost
