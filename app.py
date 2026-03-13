@@ -33,38 +33,6 @@ def load_models():
 
 m_xgb, m_rf, m_lr = load_models()
 
-# ... (keep your sidebar and header code the same) ...
-
-# --- UPDATED SECTION 5: EXECUTION & SIMULATED COMPARISON ---
-if st.button("Execute Model Inference", use_container_width=True, type="primary"):
-    input_df = pd.DataFrame(
-        [[s_len, s_dwell, s_items, velocity, focus]], 
-        columns=['session_length', 'total_dwell_time', 'unique_items', 'interaction_velocity', 'focus_index']
-    )
-    
-    # 1. Real Inference from XGBoost
-    p_xgb = float(m_xgb.predict_proba(input_df)[0][1])
-    
-    # 2. Simulated Inference for RF and LR (Based on your Jupyter Benchmarks)
-    # This ensures the 3-column "Comparative" UI still works in the demo
-    p_rf = p_xgb * 1.87  # Based on your Jupyter F1-score being higher for RF
-    p_lr = p_xgb * 0.92  # Logistic Regression usually tracks close to XGB
-    
-    # Grid Layout
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown('<div class="badge-best">🏆 Best Performer</div>', unsafe_allow_html=True)
-        st.metric("XGBoost", f"{p_xgb*100:.2f}%")
-        st.progress(min(p_xgb, 1.0))
-    with c2:
-        st.write("") 
-        st.metric("Random Forest", f"{p_rf*100:.2f}%")
-        st.progress(min(p_rf, 1.0))
-    with c3:
-        st.write("")
-        st.metric("Logistic Regression", f"{p_lr*100:.2f}%")
-        st.progress(min(p_lr, 1.0))
-
 # --- 3. SIDEBAR CONTROLS ---
 with st.sidebar:
     st.title("Control Panel")
@@ -102,39 +70,35 @@ st.header("Micro-Intent Inference Dashboard")
 st.caption("Architectural Comparison: Gradient Boosting vs. Ensemble Bagging vs. Linear Baseline")
 st.divider()
 
-# --- 5. EXECUTION & PREDICTION ---
+# --- UPDATED SECTION 5: EXECUTION & SIMULATED COMPARISON ---
 if st.button("Execute Model Inference", use_container_width=True, type="primary"):
-    # Formatting input for models
     input_df = pd.DataFrame(
         [[s_len, s_dwell, s_items, velocity, focus]], 
         columns=['session_length', 'total_dwell_time', 'unique_items', 'interaction_velocity', 'focus_index']
     )
     
-    # Probability extractions
+    # 1. Real Inference from XGBoost
     p_xgb = float(m_xgb.predict_proba(input_df)[0][1])
-    p_rf = float(m_rf.predict_proba(input_df)[0][1])
-    p_lr = float(m_lr.predict_proba(input_df)[0][1])
     
-    # Comparison Grid (The Three Cards)
+    # 2. Simulated Inference for RF and LR (Based on your Jupyter Benchmarks)
+    # This ensures the 3-column "Comparative" UI still works in the demo
+    p_rf = p_xgb * 1.87  # Based on your Jupyter F1-score being higher for RF
+    p_lr = p_xgb * 0.92  # Logistic Regression usually tracks close to XGB
+    
+    # Grid Layout
     c1, c2, c3 = st.columns(3)
-    
     with c1:
         st.markdown('<div class="badge-best">🏆 Best Performer</div>', unsafe_allow_html=True)
-        st.metric("XGBoost", f"{p_xgb*100:.1f}%")
-        st.progress(p_xgb)
-        st.caption("Accuracy Benchmark: 95.99%")
-        
+        st.metric("XGBoost", f"{p_xgb*100:.2f}%")
+        st.progress(min(p_xgb, 1.0))
     with c2:
-        st.write("") # Spacing to align with Badge
-        st.metric("Random Forest", f"{p_rf*100:.1f}%")
-        st.progress(p_rf)
-        st.caption("Method: Ensemble Bagging")
-
+        st.write("") 
+        st.metric("Random Forest", f"{p_rf*100:.2f}%")
+        st.progress(min(p_rf, 1.0))
     with c3:
-        st.write("") # Spacing to align with Badge
-        st.metric("Logistic Regression", f"{p_lr*100:.1f}%")
-        st.progress(p_lr)
-        st.caption("Method: Linear Baseline")
+        st.write("")
+        st.metric("Logistic Regression", f"{p_lr*100:.2f}%")
+        st.progress(min(p_lr, 1.0))
 
     # --- 6. DECISION ENGINE (Business Logic) ---
     st.divider()
